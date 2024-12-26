@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Netflix IMDB Ratings",
+    "version": "1.0",
+    "description": "Display IMDB ratings on Netflix browse page",
+    "permissions": [
+      "activeTab"
+    ],
+    "host_permissions": [
+      "*://*.netflix.com/*",
+      "https://www.omdbapi.com/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["*://*.netflix.com/*"],
+        "css": ["styles.css"],
+        "js": ["content.js"]
+      }
+    ]
+  }
