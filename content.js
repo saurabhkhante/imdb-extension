@@ -77,23 +77,19 @@ function isMovieCard(element) {
 
 // Function to add rating to a card
 async function addRatingToCard(card) {
+    // Skip if rating is already added
     if (card.querySelector('.imdb-rating')) return;
     
     const title = extractTitleFromCard(card);
-    if (!title) return;
+    if (!title) return;  // Skip if no title found
     
     const imdbData = await fetchIMDBRating(title);
-    if (!imdbData || !imdbData.rating) return;
+    // Only show rating if it exists and is not "N/A"
+    if (!imdbData || !imdbData.rating || imdbData.rating === "N/A") return;
     
     const ratingElement = createRatingElement(imdbData.rating, imdbData.imdbID);
-    
-    // Find the most appropriate container for the rating
-    const container = card.querySelector('.boxart-container') || 
-                     card.querySelector('[data-uia="video-card-container"]') ||
-                     card;
-                     
-    container.style.position = 'relative';
-    container.appendChild(ratingElement);
+    card.style.position = 'relative';
+    card.appendChild(ratingElement);
 }
 
 // Function to observe and handle new Netflix cards being added
